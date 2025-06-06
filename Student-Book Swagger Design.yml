@@ -1,0 +1,480 @@
+openapi: 3.0.4
+info:
+  title: Student Library Microservices (REST API)
+  description: |-
+    Microservices (REST API) where a university student can browse all library books and hold a maximum of 3 books.
+  contact:
+    email: pisethath@gmail.com
+  version: 1.0.12
+paths:
+  /student:
+    get:
+      tags:
+        - Student
+      summary: List of student
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/Student'
+                    - $ref: '#/components/schemas/Student2'
+        '400':
+          description: Your request is not acceptable.
+        '404':
+          description: Data is not found.
+        '422':
+          description: Validation exception.
+  /student/info:
+    get:
+      tags:
+        - Student
+      summary: Student information
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Your request is not acceptable.
+        '404':
+          description: Data is not found.
+        '422':
+          description: Validation exception.
+  /student/book:
+    get:
+      tags:
+        - Student
+      summary: Student hold book information
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentBook'
+        '400':
+          description: Your request is not acceptable.
+        '404':
+          description: Data is not found.
+        '422':
+          description: Validation exception.
+  /student/new:
+    post:
+      tags:
+        - Student
+      summary: Add new student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStudent'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          
+  /student/update:
+    post:
+      tags:
+        - Student
+      summary: Update existing student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewStudent'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /student/upload:
+    post:
+      tags:
+        - Student
+      summary: Uploads a student image.
+      operationId: uploadFile
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: No file uploaded
+        '404':
+          description: Pet not found
+  /book:
+    get:
+      tags:
+        - Book
+      summary: List of book
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        '400':
+          description: Your request is not acceptable.
+        '404':
+          description: Data is not found.
+        '422':
+          description: Validation exception.
+  /notification/borrow-book:
+    get:
+      tags:
+        - Book
+      summary: List of notification borrow book
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationsBorrow'
+        '400':
+          description: Your request is not acceptable.
+        '404':
+          description: Data is not found.
+        '422':
+          description: Validation exception.
+  /notification/new-book:
+    get:
+      tags:
+        - Book
+      summary: List of notification borrow book
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationsNew'
+        '400':
+          description: Your request is not acceptable.
+        '404':
+          description: Data is not found.
+        '422':
+          description: Validation exception.
+  /book/new:
+    post:
+      tags:
+        - Book
+      summary: Add new book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /book/update:
+    post:
+      tags:
+        - Book
+      summary: Update existing book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBook'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /book/borrow:
+    post:
+      tags:
+        - Book
+      summary: Update existing book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BorrowBook'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /book/return:
+    post:
+      tags:
+        - Book
+      summary: Update existing book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BorrowBook'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /auth/signup:
+    post:
+      tags:
+        - Authentication
+      summary: Signup for new user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingUp'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingUp'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login for authentication.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingUp'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingIn'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  
+components:
+  schemas:
+    Student:
+      properties:
+        id:
+          type: integer
+          example: 1
+        studentId:
+          type: string
+          example: APS0001
+        photo:
+          type: string
+          example: /9j/4AAQSkZJRgABAQEASABIAAD/4gIoSUNDX1BST0ZJTEUAAQ
+        name:
+          type: string
+          example: Piseth Ath
+        phoneNumber:
+          type: string
+          example: 077 219 432
+        email:
+          type: string
+          example: pisethath@gmail.com
+    Student2:
+      properties:
+        id:
+          type: integer
+          example: 2
+        studentId:
+          type: string
+          example: APS0002
+        photo:
+          type: string
+        name:
+          type: string
+          example: Sokea but
+        phoneNumber:
+          type: string
+          example: 
+        email:
+          type: string
+          example: sokeabut@gmail.com
+    StudentBook:
+      properties:
+        name:
+          type: string
+          example: Sokea but
+        studentId:
+          type: string
+          example: APS0002
+        Book:
+          type: array
+          items:
+              $ref: '#/components/schemas/Book'
+    Book:
+       properties:
+        id:
+          type: integer
+          example: 1
+        author:
+          type: string
+          example: Piseth Ath
+        title:
+          type: string
+          example: The Forest
+        category:
+          type: string
+          example: Journey
+        description:
+          type: string
+    NewBook:
+       properties:
+        author:
+          type: string
+          example: Piseth Ath
+        title:
+          type: string
+          example: The Forest
+        category:
+          type: string
+          example: Journey
+        description:
+          type: string
+    BorrowBook:
+       properties:
+        author:
+          type: string
+          example: Piseth Ath
+        title:
+          type: string
+          example: The Forest
+        category:
+          type: string
+          example: Journey
+        description:
+          type: string
+    NewStudent:
+      properties:
+        studentId:
+          type: string
+          example: APS0001
+        name:
+          type: string
+          example: Piseth Ath
+        phoneNumber: 
+          type: string
+          example: 077 219 432
+        email: 
+          type: string
+          example: pisethath@gmail.com
+    NotificationsNew:
+      properties:
+        id:
+          type: integer
+          example: 1
+        category:
+          type: string
+          example: New Book
+        studentId:
+          type: string
+        notificationDate:
+          type: string
+          example: 2025-06-05
+    NotificationsBorrow:
+      properties:
+        id:
+          type: integer
+          example: 1
+        category:
+          type: string
+          example: Borrow
+        studentId:
+          type: string
+          example: APS0002
+        notificationDate:
+          type: string
+          example: 2025-06-05
+    SingUp:
+      properties:
+        studentId:
+          type: string
+          example: APS0002
+        password:
+          type: string
+          example: 123@Me
+    SingIn:
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBUFMwMDAxIiwiaWF0IjoxNzQ5MTM0MTI1LCJleHAiOjE3NDkxMzc3MjV9.13uTi4lm_H9g41ckuw2TjLO5AxmKUWGT4C6ecP0RMyk
+        expiresIn:
+          type: integer
+          example: 3600000
